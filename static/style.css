@@ -1,0 +1,23 @@
+/* Salón: azul marino y dorado. Solo adorna, no calcula nada. */
+body { font-family: Arial, sans-serif; margin: 0; background: #f4f1e6; color: #222; }
+.encabezado { background: #0a2a5a; color: #fff; border-bottom: 6px solid #c9a227; padding: 20px; }
+.encabezado h1 { margin: 0; }
+.encabezado p { margin: 4px 0 0; color: #e8d98a; }
+main { padding: 20px; }
+.contadores { display: flex; gap: 12px; margin-bottom: 16px; }
+.tarjeta { flex: 1; padding: 12px; border-radius: 8px; text-align: center; color: #fff; }
+.tarjeta strong { display: block; font-size: 28px; }
+.tarjeta span { font-size: 14px; }
+.tarjeta.verde { background: #1e7e34; }
+.tarjeta.azul { background: #0a2a5a; border: 2px solid #c9a227; }
+.tarjeta.roja { background: #b02a2a; }
+.filtro { margin-bottom: 12px; }
+table { border-collapse: collapse; width: 100%; background: #fff; }
+th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+th { background: #0a2a5a; color: #fff; }
+td.aprob { background: #d4edda; color: #155724; font-weight: bold; }
+td.part { background: #cce5ff; color: #004085; font-weight: bold; }
+td.sin { background: #f8d7da; color: #721c24; font-weight: bold; }
+td.reg { background: #e2e3e5; color: #383d41; font-weight: bold; }
+.incons { background: #fff8e1; border: 1px solid #c9a227; padding: 12px 12px 12px 28px; }
+a { color: #0a2a5a; }

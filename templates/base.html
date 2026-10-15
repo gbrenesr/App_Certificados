@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>{% block titulo %}Academia Horizonte — Certificados{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="encabezado">
+    <h1>Academia Horizonte</h1>
+    <p>Certificados por cohorte — Bodega (datos), Cocina (app.py) y Salón (esta página)</p>
+  </header>
+  <main>
+    {% block contenido %}{% endblock %}
+  </main>
+</body>
+</html>

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titulo %}Academia Horizonte — Resultados{% endblock %}
+{% block contenido %}
+<section class="contadores">
+  <div class="tarjeta verde"><strong>{{ contadores.aprobacion }}</strong><span>Aprobación</span></div>
+  <div class="tarjeta azul"><strong>{{ contadores.participacion }}</strong><span>Participación</span></div>
+  <div class="tarjeta roja"><strong>{{ contadores.sin_certificado }}</strong><span>Sin certificado</span></div>
+</section>
+
+<form class="filtro" method="get" action="/">
+  <label for="programa">Filtrar por Programa:</label>
+  <select id="programa" name="programa" onchange="this.form.submit()">
+    <option value="Todos" {% if filtro == "Todos" %}selected{% endif %}>Todos</option>
+    {% for p in programas %}
+    <option value="{{ p }}" {% if filtro == p %}selected{% endif %}>{{ p }}</option>
+    {% endfor %}
+  </select>
+  <noscript><button type="submit">Filtrar</button></noscript>
+</form>
+
+<h2>Tabla de resultados</h2>
+<table>
+  <thead>
+    <tr><th>Nombre</th><th>Programa</th><th>Módulos</th><th>Promedio</th><th>Asistencia</th><th>Certificado</th></tr>
+  </thead>
+  <tbody>
+    {% for r in resultados %}
+    <tr>
+      <td><a href="/estudiante/{{ r.identificacion }}">{{ r.nombre }}</a></td>
+      <td>{{ r.programa }}</td>
+      <td>{{ r.modulos }}</td>
+      <td>{{ "%.2f"|format(r.promedio) }}</td>
+      <td>{{ "%.2f"|format(r.asistencia) }}</td>
+      {% if r.certificado == "Aprobación" %}
+      <td class="aprob">Aprobación</td>
+      {% elif r.certificado == "Participación" %}
+      <td class="part">Participación</td>
+      {% elif r.certificado == "Sin certificado" %}
+      <td class="sin">Sin certificado</td>
+      {% else %}
+      <td class="reg">Sin registros</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Inconsistencias ({{ inconsistencias|length }} detectadas)</h2>
+<ul class="incons">
+  {% for i in inconsistencias %}
+  <li><strong>{{ i.identificacion }}</strong> — {{ i.nombre }} ({{ i.programa }}): {{ i.detalle }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

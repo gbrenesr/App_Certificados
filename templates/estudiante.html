@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block titulo %}Academia Horizonte — Detalle{% endblock %}
+{% block contenido %}
+<p><a href="/">← Volver a la lista</a></p>
+{% if r %}
+<h2>{{ r.nombre }}</h2>
+<p>{{ r.programa }} — Identificación {{ r.identificacion }}</p>
+<ul>
+  <li>Módulos cursados: {{ r.modulos }}</li>
+  <li>Promedio: {{ "%.2f"|format(r.promedio) }}</li>
+  <li>Asistencia: {{ "%.2f"|format(r.asistencia) }}</li>
+  <li>Certificado: {{ r.certificado }}</li>
+</ul>
+{% else %}
+<p>No se encontró esa identificación en el Maestro.</p>
+{% endif %}
+{% endblock %}
