@@ -7,8 +7,23 @@
 </head>
 <body>
   <header class="encabezado">
-    <h1>Academia Horizonte</h1>
-    <p>Certificados por cohorte — Bodega (datos), Cocina (app.py) y Salón (esta página)</p>
+    <div class="marca">
+      <h1>Academia Horizonte</h1>
+      <p>Certificados por cohorte — Bodega (datos), Cocina (app.py) y Salón (esta página)</p>
+    </div>
+    {# Ladrillo: CONDICIONAL, la barra de usuario solo aparece si hay sesión iniciada #}
+    {% if session.get('correo') %}
+    <div class="barra-usuario">
+      <span>{{ session.get('correo') }}</span>
+      {# Ladrillo: insignia de color según el rol guardado en la sesión #}
+      {% if session.get('rol') == 'admin' %}
+      <span class="insignia insignia-admin">admin</span>
+      {% else %}
+      <span class="insignia insignia-usuario">usuario</span>
+      {% endif %}
+      <a class="boton-salir" href="{{ url_for('salir') }}">Salir</a>
+    </div>
+    {% endif %}
   </header>
   <main>
     {% block contenido %}{% endblock %}

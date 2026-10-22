@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block titulo %}Academia Horizonte — Entrar{% endblock %}
+{% block contenido %}
+<section class="caja-login">
+  <h2>Entrar</h2>
+  <p class="subtitulo">Ingrese con su correo y contraseña para ver los certificados.</p>
+
+  {# Ladrillo: CONDICIONAL, mensaje rojo si las credenciales fueron incorrectas #}
+  {% if error %}
+  <p class="mensaje-error">{{ error }}</p>
+  {% endif %}
+
+  {# Ladrillo: CONDICIONAL, aviso cuando no hay variables de entorno configuradas #}
+  {% if modo_demo %}
+  <div class="aviso-demo">
+    <strong>Modo demostración</strong>
+    <p>No se encontraron las variables de entorno. Se están usando usuarios de prueba:</p>
+    <ul>
+      <li>Administrador: <code>admin@academia.cr</code> / <code>admin123</code></li>
+      <li>Usuario: <code>usuario@academia.cr</code> / <code>usuario123</code></li>
+    </ul>
+  </div>
+  {% endif %}
+
+  <form method="post" action="{{ url_for('login') }}">
+    <label for="correo">Correo</label>
+    <input id="correo" name="correo" type="email" autocomplete="username" required>
+
+    <label for="clave">Contraseña</label>
+    <input id="clave" name="clave" type="password" autocomplete="current-password" required>
+
+    <button type="submit">Entrar</button>
+  </form>
+</section>
+{% endblock %}

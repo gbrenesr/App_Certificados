@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block titulo %}Academia Horizonte — Sin permiso{% endblock %}
+{% block contenido %}
+<section class="caja-login">
+  <h2>Esta sección es solo para administradores</h2>
+  <p class="subtitulo">
+    Su sesión está activa, pero su rol no tiene permiso para ver esta parte.
+    Si cree que es un error, pida a la administración que revise su acceso.
+  </p>
+
+  <div class="aviso-demo">
+    <p><strong>Sesión actual</strong></p>
+    <ul>
+      <li>Correo: <code>{{ session.get('correo') }}</code></li>
+      <li>Rol: <code>{{ session.get('rol') }}</code></li>
+    </ul>
+  </div>
+
+  <p class="acciones">
+    <a class="boton" href="{{ url_for('index') }}">Volver al tablero</a>
+    <a class="boton boton-secundario" href="{{ url_for('salir') }}">Salir</a>
+  </p>
+</section>
+{% endblock %}

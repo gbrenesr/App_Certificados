@@ -1,11 +1,52 @@
 {% extends "base.html" %}
 {% block titulo %}Academia Horizonte — Resultados{% endblock %}
 {% block contenido %}
+{# Ladrillo: CONDICIONAL, aviso verde cuando la tabla viene de archivos subidos #}
+{% if aviso_subida %}
+<div class="aviso-verde">
+  <strong>Está viendo datos subidos, solo en esta pantalla.</strong>
+  <p>Estos resultados viven únicamente aquí: no se guardaron en ningún lado. Si recarga la app
+     o vuelve al tablero, verá otra vez los datos de fábrica, porque todavía no hay dónde guardarlos.</p>
+</div>
+{% endif %}
+
+{# Ladrillo: CONDICIONAL, aviso rojo si hubo un error al cargar los archivos #}
+{% if error %}
+<div class="mensaje-error">{{ error }}</div>
+{% endif %}
+
 <section class="contadores">
   <div class="tarjeta verde"><strong>{{ contadores.aprobacion }}</strong><span>Aprobación</span></div>
   <div class="tarjeta azul"><strong>{{ contadores.participacion }}</strong><span>Participación</span></div>
   <div class="tarjeta roja"><strong>{{ contadores.sin_certificado }}</strong><span>Sin certificado</span></div>
 </section>
+
+{# Ladrillo: CONDICIONAL, el panel de administración solo existe para el rol admin #}
+{% if session.get('rol') == 'admin' %}
+<section class="panel-admin">
+  <h2>Panel de administración</h2>
+  <p class="origen"><strong>Origen de los datos en pantalla:</strong> {{ origen }}</p>
+  <p class="subtitulo">
+    Suba los dos Excel para recalcular. Se leen en memoria y no se guardan en el servidor.
+  </p>
+  <form method="post" action="{{ url_for('cargar') }}" enctype="multipart/form-data">
+    <div class="campos-archivo">
+      <label for="maestro">Maestro de estudiantes (.xlsx)</label>
+      <input id="maestro" name="maestro" type="file" accept=".xlsx" required>
+
+      <label for="evaluaciones">Registro de evaluaciones (.xlsx)</label>
+      <input id="evaluaciones" name="evaluaciones" type="file" accept=".xlsx" required>
+    </div>
+    <div class="acciones">
+      <button class="boton" type="submit" name="accion" value="ver">Procesar y ver en pantalla</button>
+      <button class="boton boton-secundario" type="submit" name="accion" value="descargar">Procesar y descargar Excel</button>
+    </div>
+  </form>
+  <p class="descarga-fabrica">
+    <a href="{{ url_for('descargar') }}">Descargar los resultados de los datos de fábrica (.xlsx)</a>
+  </p>
+</section>
+{% endif %}
 
 <form class="filtro" method="get" action="/">
   <label for="programa">Filtrar por Programa:</label>
@@ -45,10 +86,13 @@
   </tbody>
 </table>
 
-<h2>Inconsistencias ({{ inconsistencias|length }} detectadas)</h2>
+{# Ladrillo: CONDICIONAL, la sección de inconsistencias solo se dibuja para el rol admin #}
+{% if session.get('rol') == 'admin' %}
+<h2 id="inconsistencias">Inconsistencias ({{ inconsistencias|length }} detectadas)</h2>
 <ul class="incons">
   {% for i in inconsistencias %}
   <li><strong>{{ i.identificacion }}</strong> — {{ i.nombre }} ({{ i.programa }}): {{ i.detalle }}</li>
   {% endfor %}
 </ul>
+{% endif %}
 {% endblock %}
